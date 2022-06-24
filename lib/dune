@@ -18,4 +18,6 @@
   decompress.de
   decompress.gz
   uri
+  conan-unix
+  conan-database
   ))

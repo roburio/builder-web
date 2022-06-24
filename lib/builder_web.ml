@@ -50,12 +50,16 @@ let mime_lookup path =
   match Fpath.to_string path with
   | "build-environment" | "opam-switch" | "system-packages" ->
     "text/plain"
-  | _ ->
+  | filename ->
     if Fpath.has_ext "build-hashes" path
     then "text/plain"
     else if Fpath.is_prefix Fpath.(v "bin/") path
     then "application/octet-stream"
-    else Magic_mime.lookup (Fpath.to_string path)
+    else match Option.bind
+                 (Result.to_option (Conan_unix.run_with_tree Conan_magic_database.tree filename))
+                 Conan.Metadata.mime with
+      | Some mime_type -> mime_type
+      | None -> "application/octet-stream" (* default *)
 
 let string_of_html =
   Format.asprintf "%a" (Tyxml.Html.pp ())

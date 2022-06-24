@@ -51,6 +51,8 @@ depends: [
   "owee"
   "solo5-elftool" {>= "0.3.0"}
   "decompress"
+  "conan-unix" {>= "0.0.2"}
+  "conan-database" {>= "0.0.2"}
 ]
 
 synopsis: "Web interface for builder"
